@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESGaming | Premium Hardware</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; color: #000000; margin: 0; padding: 0; }
+        header { background-color: #ffffff; padding: 25px 20px; text-align: center; border-bottom: 2px solid #000000; }
+        h1 { margin: 0; color: #000000; text-transform: uppercase; letter-spacing: 3px; font-size: 28px; font-weight: 800; }
+        p.subtitle { color: #666666; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; margin-top: 10px; }
+        .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .card { background: #ffffff; padding: 25px 20px; border-radius: 0px; text-align: center; border: 2px solid #000000; transition: all 0.2s ease; }
+        .card:hover { transform: translateY(-4px); box-shadow: 4px 4px 0px #000000; }
+        .card h3 { font-size: 16px; margin: 10px 0; color: #000000; font-weight: 700; line-height: 1.4; }
+        .card p { color: #000000; font-weight: 800; font-size: 15px; margin-top: 15px; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ESGaming</h1>
+    <p class="subtitle">Premium Hardware & Architecture</p>
+</header>
+
+<div class="container">
+    <div class="grid" id="product-grid"></div>
+</div>
+
+<script>
+    const products = [
+        { name: "NVIDIA GeForce RTX 5080", price: "KES 210,000" },
+        { name: "NVIDIA GeForce RTX 4090", price: "KES 320,000" },
+        { name: "NVIDIA GeForce RTX 4070 Ti Super", price: "KES 145,000" },
+        { name: "AMD Radeon RX 7900 XTX", price: "KES 160,000" },
+        { name: "AMD Ryzen 9 9950X", price: "KES 110,000" },
+        { name: "Intel Core i9-14900K", price: "KES 95,000" },
+        { name: "PlayStation 5 Slim (Disc Edition)", price: "KES 85,000" },
+        { name: "Xbox Series X 1TB", price: "KES 80,000" },
+        { name: "ASUS TUF 27\" 1440p WOLED Monitor (Matte)", price: "KES 130,000" },
+        { name: "Alienware AW3225QF 4K QD-OLED", price: "KES 180,000" },
+        { name: "64GB Corsair Dominator Titanium DDR5", price: "KES 45,000" },
+        { name: "32GB G.Skill Trident Z5 Neo DDR5", price: "KES 22,000" },
+        { name: "2TB Samsung 990 Pro NVMe SSD", price: "KES 32,000" },
+        { name: "Razer DeathAdder V3 Pro Wireless", price: "KES 25,000" },
+        { name: "Logitech G Pro X Superlight 2", price: "KES 26,000" },
+        { name: "Wooting 60HE+ Analog Keyboard", price: "KES 35,000" },
+        { name: "SteelSeries Arctis Nova Pro Wireless", price: "KES 55,000" },
+        { name: "Shure SM7B Dynamic Microphone", price: "KES 65,000" },
+        { name: "Elgato Stream Deck MK.2", price: "KES 24,000" },
+        { name: "Sony A6700 Mirrorless Camera", price: "KES 215,000" }
+    ];
+
+    const grid = document.getElementById('product-grid');
+    products.forEach(p => {
+        grid.innerHTML += `<div class="card"><h3>${p.name}</h3><p>${p.price}</p></div>`;
+    });
+</script>
+
+<script src="widget.js"></script>
+
+</body>
+</html>
