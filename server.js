@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Load the isolated Inventory
 let inventoryData = [];
 try {
     inventoryData = JSON.parse(fs.readFileSync("./inventory.json", "utf8"));
@@ -15,13 +16,16 @@ try {
     console.error("Error loading inventory.json. Ensure the file exists.", error);
 }
 
+// Initialize Google Gemini
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+// Enable the AI to search the live internet
 const model = genAI.getGenerativeModel({ 
     model: "gemini-2.5-flash", 
     tools: [{ googleSearch: {} }] 
 });
 
+// THE UPGRADED ESGAMING SYSTEM PROMPT
 const systemPrompt = `You are the ultimate AI tech expert and virtual sales assistant for ESGaming.
 
 YOUR CAPABILITIES (NO RESTRICTIONS):
@@ -31,6 +35,13 @@ YOUR CAPABILITIES (NO RESTRICTIONS):
 YOUR STORE INVENTORY:
 Here is your current stock:
 ${JSON.stringify(inventoryData)}
+
+STORE LOCATION & WHATSAPP HANDOFF PROTOCOL (CRITICAL):
+- Physical Location: Room 405, Old Mutual Building, Kimathi St, Nairobi.
+- Website: esgaming.co.ke
+- If a user asks where the shop is located, give them the exact physical address.
+- If a user is ready to buy, wants to speak to a human, asks for a phone number, or needs human support, YOU MUST provide this exact clickable link in your response:
+[Click here to chat with our human agent on WhatsApp](https://wa.me/254703539102)
 
 CRITICAL INSTRUCTION - ORDER OF RESPONSE:
 If a user asks about a specific item, GPU, or product:
@@ -49,10 +60,27 @@ app.post("/api/chat", async (req, res) => {
         const chat = model.startChat({
             history: [
                 { role: "user", parts: [{ text: systemPrompt }] },
-                { role: "model", parts: [{ text: "Understood. I will always state whether an item is in stock first, and then I will provide an unrestricted, expert answer." }] }
+                { role: "model", parts: [{ text: "Understood. I will always state whether an item is in stock first, state the physical address if asked, and provide the exact WhatsApp link when a human is needed." }] }
             ]
         });
 
+        const result = await chat.sendMessage(message);
+        const response = await result.response;
+        const text = response.text();
+
+        res.json({ reply: text });
+
+    } catch (error) {
+        console.error("AI Engine Error:", error);
+        res.status(500).json({ error: "The AI server is currently offline. Please try again later." });
+    }
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`ESGaming AI Engine running cleanly on port ${PORT}`);
+});
         const result = await chat.sendMessage(message);
         const response = await result.response;
         const text = response.text();
