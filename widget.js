@@ -27,7 +27,7 @@
     closeBtn.addEventListener('click', function() { chatWindow.style.display = 'none'; chatBtn.style.display = 'flex'; });
 
     // RENDER BASE URL REPLACEMENT PENDING DEPLOYMENT
-    var BACKEND_URL = "https://esgaming-release.onrender.com";
+    var BACKEND_URL = "https://esgaming-release.onrender.com/api/chat";
 
     function typeHTML(element, htmlString, speed) {
         element.innerHTML = '';
